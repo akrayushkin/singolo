@@ -242,3 +242,85 @@ h6 {
   order: -1;
   margin-left: 2px;
 }
+
+.services__inner {
+  background-color: #f2f2f2;
+  border-bottom: 6px solid #ffffff;
+}
+
+.services__content {
+  min-height: 494px;
+  padding: 0 10px;
+}
+
+.services__title {
+  margin: 0;
+  margin-bottom: 20px;
+  padding-top: 59px;
+
+  font-weight: 900;
+  font-size: 30px;
+  color: #666d89;
+  letter-spacing: 0.4px;
+}
+
+.services__intro {
+  margin-bottom: 49px;
+
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: justify;
+  letter-spacing: -0.3px;
+}
+
+.services__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.services__item {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  margin-bottom: 32px;
+}
+
+.services__item-ico {
+  width: 59px;
+  height: 59px;
+}
+
+.services__item-content {
+  width: 220px;
+}
+
+.services__item-title {
+  margin: 0;
+  margin-bottom: 13px;
+
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 0.8;
+  color: #666d89;
+  letter-spacing: 0.2px;
+}
+
+.services__item-intro {
+  margin: 0;
+
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: justify;
+  hyphens: auto;
+
+  -moz-hyphenate-limit-chars: 6 3 3;
+  -ms-hyphenate-limit-chars: 6 3 3;
+  -moz-hyphenate-limit-last: always;
+  -ms-hyphenate-limit-last: always;
+  -moz-hyphenate-limit-lines: 2;
+  -ms-hyphenate-limit-lines: 2;
+  -moz-hyphenate-limit-zone: 8%;
+  -ms-hyphenate-limit-zone: 8%;
+}
