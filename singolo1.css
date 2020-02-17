@@ -1,0 +1,78 @@
+@import url("fonts.css");
+
+body {
+  margin: 0;
+
+  font-family: "Lato-Regular",
+    "Lucida Sans Unicode",
+    "Lucida Grande",
+    sans-serif;
+  color: #767e9e;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  font-family: "Lato-Regular",
+    "Lucida Sans Unicode",
+    "Lucida Grande",
+    sans-serif;
+  color: currentColor;
+}
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+
+  border: 0;
+
+  clip: rect(0 0 0 0);
+}
+
+.container {
+  width: 960px;
+  min-width: 320px;
+  max-width: 960px;
+  padding: 0 30px;
+}
+
+.reset-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.page {
+  box-sizing: border-box;
+  min-width: 320px;
+  min-height: 100%;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.page__inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page__content {
+  flex-grow: 1;
+  max-width: 1020px;
+  margin: 0 auto;
+}
