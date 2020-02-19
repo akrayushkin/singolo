@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "Lato-Regular";
+  font-family: "Lato";
   src: url("assets/fonts/Lato-Regular.eot");
   src: url("assets/fonts/Lato-Regular.eot?#iefix") format("embedded-opentype"),
     url("assets/fonts/Lato-Regular.woff2") format("woff2"),
@@ -10,7 +10,7 @@
 }
 
 @font-face {
-  font-family: "Lato-Light";
+  font-family: "Lato";
   src: url("assets/fonts/Lato-Light.eot");
   src: url("assets/fonts/Lato-Light.eot?#iefix") format("embedded-opentype"),
     url("assets/fonts/Lato-Light.woff2") format("woff2"),
@@ -21,7 +21,7 @@
 }
 
 @font-face {
-  font-family: "Lato-Bold";
+  font-family: "Lato";
   src: url("assets/fonts/Lato-Bold.eot");
   src: url("assets/fonts/Lato-Bold.eot?#iefix") format("embedded-opentype"),
     url("assets/fonts/Lato-Bold.woff2") format("woff2"),
@@ -32,7 +32,7 @@
 }
 
 @font-face {
-  font-family: "Lato-Black";
+  font-family: "Lato";
   src: url("assets/fonts/Lato-Black.eot");
   src: url("assets/fonts/Lato-Black.eot?#iefix") format("embedded-opentype"),
     url("assets/fonts/Lato-Black.woff2") format("woff2"),
