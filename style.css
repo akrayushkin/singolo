@@ -210,11 +210,21 @@ a {
   position: absolute;
   top: 65px;
   left: 14px;
+
   z-index: 2;
+  width: 188px;
+  height: 333px;
+
+  background-repeat: no-repeat;
 }
 
 .slider__img-box--vertical {
   margin-top: -2px;
+}
+
+.slider__img-screen--vertical {
+  background-image: url("assets/img/screen1.jpg");
+  background-position: -14px -135px;
 }
 
 .slider__img-box--horizontal {
@@ -227,6 +237,8 @@ a {
 
 .slider__img-screen--horizontal {
   top: 91px;
+  background-image: url("assets/img/screen2.jpg");
+  background-position: -119px -122px;
 }
 
 .slider__img-shadow--horizontal {
@@ -296,6 +308,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-left: 1px;
 }
 
 .services__item {
@@ -312,6 +325,7 @@ a {
 
 .services__item-content {
   width: 220px;
+  margin-right: 1px;
 }
 
 .services__item-title {
@@ -322,6 +336,10 @@ a {
   font-size: 18px;
   line-height: 0.8;
   color: #666d89;
+}
+
+.services__item-title--perfect {
+  margin-left: 2px;
 }
 
 .services__item-intro {
@@ -457,6 +475,7 @@ a {
 .about-us__title {
   margin: 0;
   margin-bottom: 24px;
+  margin-left: 1px;
 
   font-weight: 900;
   font-size: 30px;
@@ -846,6 +865,9 @@ a {
 
 .contacts__link--email::before {
   background-image: url("assets/img/ico--email.svg");
+  width: 13px;
+  height: 8px;
+  margin-top: -3px;
 }
 
 .page-footer__inner {
