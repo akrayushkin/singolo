@@ -105,8 +105,15 @@ a {
   font-size: 25px;
 }
 
-.logo span {
+.logo h1 {
+  display: inline;
+  margin: 0;
+  padding: 0;
+
+  font-weight: inherit;
+  font-size: inherit;
   line-height: 1;
+  text-transform: uppercase;
   letter-spacing: -0.6px;
 }
 
@@ -218,6 +225,12 @@ a {
   background-repeat: no-repeat;
 }
 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .slider__img-screen {
+    height: 334px;
+  }
+}
+
 .slider__img-box--vertical {
   margin-top: -2px;
 }
@@ -315,6 +328,7 @@ a {
   display: flex;
   justify-content: space-between;
   width: 300px;
+  max-height: 89px;
   margin-bottom: 34px;
 }
 
@@ -348,6 +362,7 @@ a {
   font-size: 12px;
   line-height: 1.8;
   text-align: justify;
+  overflow: hidden;
   hyphens: auto;
 
   -moz-hyphenate-limit-chars: 6 3 3;
@@ -720,18 +735,37 @@ a {
   transition: opacity 0.3s ease;
 }
 
-.form__input:focus::placeholder {
-  opacity: 0;
+.form__input::-webkit-input-placeholder {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #f48c8f;
+  text-overflow: ellipsis;
+
+  opacity: 1;
 
   transition: opacity 0.3s ease;
 }
 
-.form__input:invalid:not(:placeholder-shown) {
-  border-color: red;
+.form__input::-moz-placeholder {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #f48c8f;
+  text-overflow: ellipsis;
+
+  opacity: 1;
+
+  transition: opacity 0.3s ease;
 }
 
-.form__input:valid:not(:placeholder-shown) {
-  border-color: green;
+.form__input::-ms-input-placeholder{
+  font-size: 12px;
+  line-height: 1.8;
+  color: #f48c8f;
+  text-overflow: ellipsis;
+
+  opacity: 1;
+
+  transition: opacity 0.3s ease;
 }
 
 .form__input:-ms-input-placeholder {
@@ -745,10 +779,42 @@ a {
   transition: opacity 0.3s ease;
 }
 
+.form__input:focus::placeholder {
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}
+
+.form__input:focus::-webkit-input-placeholder {
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}
+
+.form__input:focus::-moz-placeholder {
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}
+
+.form__input:focus::-ms-input-placeholder {
+  opacity: 0;
+
+  transition: opacity 0.3s ease;
+}
+
 .form__input:focus:-ms-input-placeholder {
   opacity: 0;
 
   transition: opacity 0.3s ease;
+}
+
+.form__input:invalid:not(:placeholder-shown) {
+  border-color: red;
+}
+
+.form__input:valid:not(:placeholder-shown) {
+  border-color: green;
 }
 
 .form__button {
@@ -851,7 +917,9 @@ a {
 }
 
 .contacts__link--location::before {
-  margin-left: -1px;
+  margin-left: 3px;
+  width: 7px;
+  height: 11px;
 
   background-image: url("assets/img/ico--location.svg");
 }
