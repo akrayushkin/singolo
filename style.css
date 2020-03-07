@@ -330,6 +330,8 @@ a {
   width: 300px;
   max-height: 89px;
   margin-bottom: 34px;
+
+  overflow: hidden;
 }
 
 .services__item-ico {
@@ -340,6 +342,8 @@ a {
 .services__item-content {
   width: 220px;
   margin-right: 1px;
+
+  overflow: hidden;
 }
 
 .services__item-title {
