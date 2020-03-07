@@ -1,0 +1,1 @@
+https://akrayushkin.github.io/singolo
