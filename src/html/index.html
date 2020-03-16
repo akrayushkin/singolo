@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Singolo</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -20,16 +19,16 @@
                 <a class="main-nav__link main-nav__link--current" href="#">HOME</a>
               </li>
               <li class="main-nav__item">
-                <a class="main-nav__link" href="#">SERVICES</a>
+                <a class="main-nav__link" href="#services">SERVICES</a>
               </li>
               <li class="main-nav__item">
-                <a class="main-nav__link" href="#">PORTFOLIO</a>
+                <a class="main-nav__link" href="#portfolio">PORTFOLIO</a>
               </li>
               <li class="main-nav__item">
-                <a class="main-nav__link" href="#">ABOUT</a>
+                <a class="main-nav__link" href="#about">ABOUT</a>
               </li>
               <li class="main-nav__item">
-                <a class="main-nav__link" href="#">CONTACT</a>
+                <a class="main-nav__link" href="#contact">CONTACT</a>
               </li>
             </ul>
           </nav>
@@ -40,16 +39,21 @@
         <div class="page-hero__inner container slider">
           <div class="slider__content">
             <ul class="slider__list">
-              <li class="slider__item">
+              <li class="slider__item slider__item--2-phones">
                 <div class="slider__img-box slider__img-box--vertical">
                   <div class="slider__img-screen slider__img-screen--vertical"></div>
-                  <img class="slider__img-phone" src="assets/img/phone.png" alt="Phone" width="215" height="458">
-                  <img class="slider__img-shadow" src="assets/img/shadow.png" alt="Shadow" width="240" height="483">
+                  <img class="slider__img-phone" src="assets/img/slider-phone.png" alt="Phone" width="215" height="458">
+                  <img class="slider__img-shadow" src="assets/img/slider-shadow.png" alt="Shadow" width="240" height="483">
                 </div>
                 <div class="slider__img-box slider__img-box--horizontal">
                   <div class="slider__img-screen slider__img-screen--horizontal"></div>
-                  <img class="slider__img-phone slider__img-phone--horizontal" src="assets/img/phone.png" alt="Phone" width="215" height="458">
-                  <img class="slider__img-shadow slider__img-shadow--horizontal" src="assets/img/shadow.png" alt="Shadow" width="240" height="483">
+                  <img class="slider__img-phone slider__img-phone--horizontal" src="assets/img/slider-phone.png" alt="Phone" width="215" height="458">
+                  <img class="slider__img-shadow slider__img-shadow--horizontal" src="assets/img/slider-shadow.png" alt="Shadow" width="240" height="483">
+                </div>
+              </li>
+              <li class="slider__item slider__item--3-phones visually-hidden">
+                <div class="slider__img-box">
+                  <img class="slider__img" src="assets/img/slider-3-phones.png" alt="Phone" width="517" height="513">
                 </div>
               </li>
             </ul>
@@ -62,7 +66,7 @@
           </div>
         </div>
       </section>
-      <section class="services">
+      <section class="services" id="services">
         <div class="services__inner container">
           <h2 class="services__title">Our Services</h2>
           <p class="services__intro">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum. Duis mollis, non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
@@ -124,84 +128,84 @@
           </ul>
         </div>
       </section>
-      <section class="portfolio">
+      <section class="portfolio" id="portfolio">
         <div class="portfolio__inner container">
           <h2 class="portfolio__title">Portfolio</h2>
           <p class="portfolio__intro">Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
           <ul class="portfolio__filter filter">
             <li class="filter__item">
-              <a href="#" class="filter__link  filter__link--active">All</a>
+              <a class="filter__link  filter__link--active">All</a>
             </li>
             <li class="filter__item">
-              <a href="#" class="filter__link">Web Design</a>
+              <a class="filter__link">Web Design</a>
             </li>
             <li class="filter__item">
-              <a href="#" class="filter__link">Graphic Design</a>
+              <a class="filter__link">Graphic Design</a>
             </li>
             <li class="filter__item">
-              <a href="#" class="filter__link">Artwork</a>
+              <a class="filter__link">Artwork</a>
             </li>
           </ul>
           <div class="portfolio__gallery gallery">
             <div class="gallery__inner">
               <ul class="gallery__list">
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
-                    <img class="gallery__img" src="assets/img/project-1.png" alt="Project1" width="220" height="187">
+                  <a class="gallery__link">
+                    <img class="gallery__img " src="assets/img/project-1.png" alt="Project1" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-2.png" alt="Project2" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-3.png" alt="Project3" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-4.png" alt="Project4" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-5.png" alt="Project5" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-6.png" alt="Project6" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-7.png" alt="Project7" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-8.png" alt="Project8" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-9.png" alt="Project9" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-10.png" alt="Project10" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-11.png" alt="Project11" width="220" height="187">
                   </a>
                 </li>
                 <li class="gallery__item">
-                  <a href="#" class="gallery__link">
+                  <a class="gallery__link">
                     <img class="gallery__img" src="assets/img/project-12.png" alt="Project12" width="220" height="187">
                   </a>
                 </li>
@@ -210,7 +214,7 @@
           </div>
         </div>
       </section>
-      <section class="about-us">
+      <section class="about-us" id="about">
         <div class="about-us__inner container">
           <h2 class="about-us__title">About Us</h2>
           <p class="about-us__intro">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum. Duis mollis, non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
@@ -257,21 +261,21 @@
           </div>
         </div>
       </section>
-      <section class="get-a-quote">
+      <section class="get-a-quote" id="contact">
         <div class="get-a-quote__inner container">
           <h2 class="get-a-quote__title">Get a Quote</h2>
           <p class="get-a-quote__intro">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum. Duis mollis, non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
           <div class="get-a-quote__wrapper">
-            <form class="get-a-quote__form form" action="#" method="POST">
+            <form class="get-a-quote__form form" name="form">
               <label class="visually-hidden" for="user-name">Your name</label>
-              <input class="form__input" type="text" id="user-name" name="user" placeholder="Name (Required)" required>
+              <input class="form__input" type="text" id="user-name" name="user" minlength="3" maxlength="120" pattern="^[А-Яа-яЁё\s]+$|^[a-zA-Z\s]+$" placeholder="Name (Required)" required>
               <label class="visually-hidden" for="user-email">Your email</label>
               <input class="form__input" type="email" id="user-email" name="email" placeholder="Email (Required)" required>
               <label class="visually-hidden" for="user-subject">Your subject</label>
-              <input class="form__input" type="text" id="user-subject" name="subject" placeholder="Subject">
+              <input class="form__input" type="text" id="user-subject" name="subject" maxlength="120" placeholder="Subject">
               <label class="visually-hidden" for="user-comment">Your comment</label>
-              <textarea class="form__input form__input-comment" id="user-comment" name="comment" placeholder="Describe your project in detail..."></textarea>
-              <button class="form__button" type="submit">Send</button>
+              <textarea class="form__input form__input-comment" id="user-comment" name="comment" maxlength="900" placeholder="Describe your project in detail..."></textarea>
+              <button class="form__button button" type="submit">Send</button>
             </form>
             <div class="get-a-quote__contacts contacts">
               <h3 class="contacts__title">Contact Information</h3>
@@ -306,6 +310,12 @@
       </footer>
     </div>
   </div>
+  <section class="modal visually-hidden">
+    <div class="modal__box">
+      <div class="modal__text"></div>
+      <button class="modal__close-button button" type="button">OK</button>
+    </div>
+  </section>
 </body>
 
 </html>
