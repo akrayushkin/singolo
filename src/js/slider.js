@@ -20,42 +20,54 @@ class Slider {
     }
   }
 
-  _changeBackgroundColor(elem) {
-    if (elem.classList.contains('slider__item--3-phones')) {
-      this.slider.style.backgroundColor = "#648BF0";
-      this.slider.style.borderColor = "#5780e7";
-    } else if (elem.classList.contains('slider__item--2-phones')) {
-      this.slider.style.backgroundColor = "#f06c64";
-      this.slider.style.borderColor = "#ea676b";
-    }
+  _changeBackgroundColor() {
+    this.slider.classList.toggle('slider--color-main');
+    this.slider.classList.toggle('slider--color-add');
+  }
+
+  slipLeft() {
+    const i = this._findCurrentSlide(this.slides);
+    const j = (i - 1 < 0) ? this.slides.length - 1 : i - 1;
+    this.slides[i].classList.add('slip-center-left');
+    this.slides[j].classList.add('slip-right-center');
+    this.slides[j].classList.remove('visually-hidden');
+    this._changeBackgroundColor();
+    setTimeout(() => {
+      this.slides[i].classList.add('visually-hidden');
+      this.slides[i].classList.remove('slip-center-left');
+      this.slides[j].classList.remove('slip-right-center');
+    }, 450);
+  }
+
+  slipRight() {
+    const i = this._findCurrentSlide(this.slides);
+    const j = (i + 1 === this.slides.length) ? 0 : i + 1;
+    this.slides[i].classList.add('slip-center-right');
+    this.slides[j].classList.add('slip-left-center');
+    this.slides[j].classList.remove('visually-hidden');
+    this._changeBackgroundColor();
+    setTimeout(() => {
+      this.slides[i].classList.remove('slip-center-right');
+      this.slides[i].classList.add('visually-hidden');
+      this.slides[j].classList.remove('slip-left-center');
+    }, 450);
   }
 
   actions() {
+    const left = this.slipLeft.bind(this);
+    const right = this.slipRight.bind(this);
+    let possible = true;
+    let debounce = function (delayedFunction) {
+      delayedFunction();
+      setTimeout(() => possible = true, 450);
+    };
     this.previous.addEventListener('click', () => {
-      const i = this._findCurrentSlide(this.slides);
-      const j = (i - 1 < 0) ? this.slides.length - 1 : i - 1;
-      this.slides[i].classList.add('slip-left');
-      this.slides[j].classList.add('slip-right');
-      setTimeout(() => {
-        this.slides[i].classList.remove('slip-left');
-        this.slides[i].classList.add('visually-hidden');
-        this._changeBackgroundColor(this.slides[j]);
-        this.slides[j].classList.remove('visually-hidden');
-        this.slides[j].classList.remove('slip-right');
-      }, 500);
+      if(possible) debounce(left);
+      possible = false;
     })
     this.next.addEventListener('click', () => {
-      const i = this._findCurrentSlide(this.slides);
-      const j = (i + 1 === this.slides.length) ? 0 : i + 1;
-      this.slides[i].classList.add('slip-right');
-      this.slides[j].classList.add('slip-left');
-      setTimeout(() => {
-        this.slides[i].classList.remove('slip-right');
-        this.slides[i].classList.add('visually-hidden');
-        this._changeBackgroundColor(this.slides[j]);
-        this.slides[j].classList.remove('visually-hidden');
-        this.slides[j].classList.remove('slip-left');
-      }, 500);
+      if(possible) debounce(right);
+      possible = false;
     })
     this.phones.forEach((item) => {
       const screen = item.querySelector('.slider__img-screen');

@@ -11,9 +11,10 @@ class FormSubmission {
     this.modalText = this.modal.querySelector('.modal__text');
     this.actions();
   }
-  
+
   _closePopup() {
     this.modal.classList.add('visually-hidden');
+    this.form.reset();
   }
 
   actions() {
@@ -21,10 +22,10 @@ class FormSubmission {
       if(this.form.checkValidity()) {
         evt.preventDefault();
         let subject = document.querySelector('#user-subject').value.toString();
-        subject = subject ? `<b>Тема:</b> ${subject}` : `<b>Без темы</b>`;
+        subject = subject ? `<b>Subject:</b> ${subject}` : `<b>No subject </b>`;
         let describe = document.querySelector('#user-comment').value.toString();
-        describe = describe ? `<b>Описание:</b> ${describe}` : `<b>Без описания</b>`;
-        this.modalText.innerHTML = `<h3>Письмо отправлено!</h3><p>${subject}</p><p>${describe}</p>`;
+        describe = describe ? `<b>Description:</b> ${describe}` : `<b>No description</b>`;
+        this.modalText.innerHTML = `<h3>The letter was sent!</h3><p>${subject}</p><p>${describe}</p>`;
         this.modal.classList.remove('visually-hidden');
         this.modalClose.focus();
       }
