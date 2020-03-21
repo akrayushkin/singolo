@@ -5,7 +5,7 @@ import FormSubmission from './form-submission';
 
 document.addEventListener('DOMContentLoaded', () => {
   const slider = new Slider('.slider');
-  const navigation = new Navigation('.main-nav');
+  const navigation = new Navigation('.main-nav', '.anchor-links');
   const gallery = new Gallery('.gallery__list');
   const formSubmission = new FormSubmission('.form', '.modal');
 });

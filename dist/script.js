@@ -121,9 +121,10 @@ class FormSubmission {
     this.modalText = this.modal.querySelector('.modal__text');
     this.actions();
   }
-  
+
   _closePopup() {
     this.modal.classList.add('visually-hidden');
+    this.form.reset();
   }
 
   actions() {
@@ -131,10 +132,10 @@ class FormSubmission {
       if(this.form.checkValidity()) {
         evt.preventDefault();
         let subject = document.querySelector('#user-subject').value.toString();
-        subject = subject ? `<b>Тема:</b> ${subject}` : `<b>Без темы</b>`;
+        subject = subject ? `<b>Subject:</b> ${subject}` : `<b>No subject </b>`;
         let describe = document.querySelector('#user-comment').value.toString();
-        describe = describe ? `<b>Описание:</b> ${describe}` : `<b>Без описания</b>`;
-        this.modalText.innerHTML = `<h3>Письмо отправлено!</h3><p>${subject}</p><p>${describe}</p>`;
+        describe = describe ? `<b>Description:</b> ${describe}` : `<b>No description</b>`;
+        this.modalText.innerHTML = `<h3>The letter was sent!</h3><p>${subject}</p><p>${describe}</p>`;
         this.modal.classList.remove('visually-hidden');
         this.modalClose.focus();
       }
@@ -247,21 +248,103 @@ class Gallery {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class Navigation {
-  constructor(element) {
+  constructor(element, transition) {
     this.nav = document.querySelector(element);
+    this.sections = document.querySelectorAll(transition);
+    this.init();
+  }
+
+  init() {
+    this.navlinks = this.nav.querySelectorAll('.main-nav__link');
     this.actions();
   }
 
+  _getMarginTopHeight() {
+    return document.querySelector('.page-header').getBoundingClientRect().height;
+  }
+
+  _getCurrentPosition() {
+    return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+  }
+
+  _getPageHeight() {
+    let scrollHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+    );
+    return scrollHeight - document.documentElement.clientHeight;
+  }
+
+  _getCoords(elem) {
+    let box = elem.getBoundingClientRect();
+    return {
+      pageTop: box.top + pageYOffset,
+      top: box.top,
+      height: box.height
+    };
+  }
+
+  _removeLinkActivity() {
+    this.navlinks.forEach((a) => {
+      a.classList.remove('main-nav__link--current');
+    })
+  }
+
+  _addLinkActivity(item) {
+    this.navlinks.forEach((a) => {
+      a.classList.remove('main-nav__link--current');
+      if (item.getAttribute('id') === a.getAttribute('href').substring((1))) {
+        a.classList.add('main-nav__link--current');
+      }
+    })
+  }
+
+  onScroll(margin) {
+    const currentPosition = this._getCurrentPosition();
+    const pageHeight = this._getPageHeight();
+    const marginTop = margin;
+    if (currentPosition < marginTop) {
+      this._removeLinkActivity();
+      this.navlinks[0].classList.add('main-nav__link--current');
+      return null;
+    }
+    if (currentPosition === pageHeight) {
+      this._removeLinkActivity();
+      this.navlinks[this.navlinks.length - 1].classList.add('main-nav__link--current');
+      return null;
+    }
+    this.sections.forEach((item) => {
+      const elem = this._getCoords(item);
+      if(elem.pageTop - marginTop <= currentPosition && elem.top <= marginTop + 5 && elem.top >= 0) {
+        this._addLinkActivity(item);
+      }
+    })
+  }
+
   actions() {
+    this.sections.forEach((item) => {
+      const elem = this._getCoords(item);
+      const marginTopHeight = this._getMarginTopHeight();
+      if(elem.pageTop - marginTopHeight <= this._getCurrentPosition() && elem.top <= marginTopHeight) {
+        this._addLinkActivity(item);
+      }
+    })
     this.nav.addEventListener('click', (evt) => {
       const target = evt.target;
       if (target.closest('.main-nav__link')) {
-        this.nav.querySelectorAll('.main-nav__link').forEach(item => {
-          item.classList.remove('main-nav__link--current');
-        });
+        this._removeLinkActivity();
         target.closest('.main-nav__link').classList.add('main-nav__link--current');
       }
     })
+    document.addEventListener('scroll', () => {
+      const marginTopHeight = this._getMarginTopHeight();
+      this.sections.forEach((item) => {
+        item.style.borderTopWidth = `${marginTopHeight}px`;
+        item.style.marginTop = `-${marginTopHeight}px`;
+      })
+      this.onScroll(marginTopHeight);
+    });
+
   }
 }
 
@@ -290,7 +373,7 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', () => {
   const slider = new _slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.slider');
-  const navigation = new _navigation__WEBPACK_IMPORTED_MODULE_1__["default"]('.main-nav');
+  const navigation = new _navigation__WEBPACK_IMPORTED_MODULE_1__["default"]('.main-nav', '.transition-section');
   const gallery = new _gallery__WEBPACK_IMPORTED_MODULE_2__["default"]('.gallery__list');
   const formSubmission = new _form_submission__WEBPACK_IMPORTED_MODULE_3__["default"]('.form', '.modal');
 });
@@ -329,42 +412,54 @@ class Slider {
     }
   }
 
-  _changeBackgroundColor(elem) {
-    if (elem.classList.contains('slider__item--3-phones')) {
-      this.slider.style.backgroundColor = "#648BF0";
-      this.slider.style.borderColor = "#5780e7";
-    } else if (elem.classList.contains('slider__item--2-phones')) {
-      this.slider.style.backgroundColor = "#f06c64";
-      this.slider.style.borderColor = "#ea676b";
-    }
+  _changeBackgroundColor() {
+    this.slider.classList.toggle('slider--color-main');
+    this.slider.classList.toggle('slider--color-add');
+  }
+
+  slipLeft() {
+    const i = this._findCurrentSlide(this.slides);
+    const j = (i - 1 < 0) ? this.slides.length - 1 : i - 1;
+    this.slides[i].classList.add('slip-center-left');
+    this.slides[j].classList.add('slip-right-center');
+    this.slides[j].classList.remove('visually-hidden');
+    this._changeBackgroundColor();
+    setTimeout(() => {
+      this.slides[i].classList.add('visually-hidden');
+      this.slides[i].classList.remove('slip-center-left');
+      this.slides[j].classList.remove('slip-right-center');
+    }, 450);
+  }
+
+  slipRight() {
+    const i = this._findCurrentSlide(this.slides);
+    const j = (i + 1 === this.slides.length) ? 0 : i + 1;
+    this.slides[i].classList.add('slip-center-right');
+    this.slides[j].classList.add('slip-left-center');
+    this.slides[j].classList.remove('visually-hidden');
+    this._changeBackgroundColor();
+    setTimeout(() => {
+      this.slides[i].classList.remove('slip-center-right');
+      this.slides[i].classList.add('visually-hidden');
+      this.slides[j].classList.remove('slip-left-center');
+    }, 450);
   }
 
   actions() {
+    const left = this.slipLeft.bind(this);
+    const right = this.slipRight.bind(this);
+    let possible = true;
+    let debounce = function (delayedFunction) {
+      delayedFunction();
+      setTimeout(() => possible = true, 450);
+    };
     this.previous.addEventListener('click', () => {
-      const i = this._findCurrentSlide(this.slides);
-      const j = (i - 1 < 0) ? this.slides.length - 1 : i - 1;
-      this.slides[i].classList.add('slip-left');
-      this.slides[j].classList.add('slip-right');
-      setTimeout(() => {
-        this.slides[i].classList.remove('slip-left');
-        this.slides[i].classList.add('visually-hidden');
-        this._changeBackgroundColor(this.slides[j]);
-        this.slides[j].classList.remove('visually-hidden');
-        this.slides[j].classList.remove('slip-right');
-      }, 500);
+      if(possible) debounce(left);
+      possible = false;
     })
     this.next.addEventListener('click', () => {
-      const i = this._findCurrentSlide(this.slides);
-      const j = (i + 1 === this.slides.length) ? 0 : i + 1;
-      this.slides[i].classList.add('slip-right');
-      this.slides[j].classList.add('slip-left');
-      setTimeout(() => {
-        this.slides[i].classList.remove('slip-right');
-        this.slides[i].classList.add('visually-hidden');
-        this._changeBackgroundColor(this.slides[j]);
-        this.slides[j].classList.remove('visually-hidden');
-        this.slides[j].classList.remove('slip-left');
-      }, 500);
+      if(possible) debounce(right);
+      possible = false;
     })
     this.phones.forEach((item) => {
       const screen = item.querySelector('.slider__img-screen');
