@@ -86,23 +86,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./css/style.css":
-/*!***********************!*\
-  !*** ./css/style.css ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-    if(false) { var cssReload; }
-  
-
-/***/ }),
-
-/***/ "./js/form-submission.js":
-/*!*******************************!*\
-  !*** ./js/form-submission.js ***!
-  \*******************************/
+/***/ "./src/js/form-submission.js":
+/*!***********************************!*\
+  !*** ./src/js/form-submission.js ***!
+  \***********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -124,29 +111,35 @@ class FormSubmission {
 
   _closePopup() {
     this.modal.classList.add('visually-hidden');
+    document.querySelector('body').classList.remove('scroll-hidden');
     this.form.reset();
   }
 
   actions() {
-    this.button.addEventListener('click', (evt) => {
-      if(this.form.checkValidity()) {
+    this.button.addEventListener('click', evt => {
+      if (this.form.checkValidity()) {
         evt.preventDefault();
         let subject = document.querySelector('#user-subject').value.toString();
-        subject = subject ? `<b>Subject:</b> ${subject}` : `<b>No subject </b>`;
+        subject = subject ? `<b>Subject:</b> ${subject}` : '<b>No subject </b>';
         let describe = document.querySelector('#user-comment').value.toString();
-        describe = describe ? `<b>Description:</b> ${describe}` : `<b>No description</b>`;
-        this.modalText.innerHTML = `<h3>The letter was sent!</h3><p>${subject}</p><p>${describe}</p>`;
+        describe = describe ? `<b>Description:</b> ${describe}` : '<b>No description</b>';
+        this.modalText.innerHTML = `
+          <h3>The letter was sent!</h3>
+          <p>${subject}</p>
+          <p>${describe}</p>`;
         this.modal.classList.remove('visually-hidden');
+        document.querySelector('body').classList.add('scroll-hidden');
         this.modalClose.focus();
       }
     });
     document.addEventListener('keydown', evt => {
       if (evt.code === 'Escape') this._closePopup();
     });
-    this.modal.addEventListener( 'click', evt => {
+    this.modal.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.modal__box')) return null;
       this._closePopup();
+      return null;
     });
     this.modalClose.addEventListener('keydown', evt => {
       if (evt.code === 'Enter') this._closePopup();
@@ -155,11 +148,11 @@ class FormSubmission {
     this.form.querySelectorAll('input').forEach(input => {
       input.addEventListener('focus', () => {
         input.maxLength = '120';
-      })
+      });
     });
     this.form.comment.addEventListener('focus', () => {
       this.form.comment.maxLength = '900';
-    })
+    });
   }
 }
 
@@ -168,10 +161,10 @@ class FormSubmission {
 
 /***/ }),
 
-/***/ "./js/gallery.js":
-/*!***********************!*\
-  !*** ./js/gallery.js ***!
-  \***********************/
+/***/ "./src/js/gallery.js":
+/*!***************************!*\
+  !*** ./src/js/gallery.js ***!
+  \***************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -191,7 +184,7 @@ class Gallery {
 
   _sortArayRandomly(array) {
     const arrayCopy = [...array];
-    function compareRandom(a, b) {
+    function compareRandom() {
       return Math.random() - 0.5;
     }
     arrayCopy.sort(compareRandom);
@@ -205,24 +198,24 @@ class Gallery {
     }
     this._sortArayRandomly(array).forEach(item => {
       this.gallery.appendChild(item);
-    })
+    });
   }
 
   actions() {
-    this.filters.addEventListener('click', (evt) => {
+    this.filters.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.filter__link') && !target.closest('.filter__link--active')) {
         this._mixGallery(this.galleryItems);
         this.filters.querySelectorAll('.filter__link').forEach(item => {
-          item.classList.remove('filter__link--active')
+          item.classList.remove('filter__link--active');
         });
         target.closest('.filter__link').classList.add('filter__link--active');
       }
     });
-    this.gallery.addEventListener('click', (evt) => {
+    this.gallery.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.gallery__item')) {
-        if(target.closest('.gallery__item--active')) {
+        if (target.closest('.gallery__item--active')) {
           target.closest('.gallery__item--active').classList.toggle('gallery__item--active');
         } else {
           this.galleryItems.forEach(item => item.classList.remove('gallery__item--active'));
@@ -238,29 +231,31 @@ class Gallery {
 
 /***/ }),
 
-/***/ "./js/navigation.js":
-/*!**************************!*\
-  !*** ./js/navigation.js ***!
-  \**************************/
+/***/ "./src/js/navigation.js":
+/*!******************************!*\
+  !*** ./src/js/navigation.js ***!
+  \******************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 class Navigation {
-  constructor(element, transition) {
+  constructor(element, anchors) {
     this.nav = document.querySelector(element);
-    this.sections = document.querySelectorAll(transition);
+    this.sections = document.querySelectorAll(anchors);
     this.init();
   }
 
   init() {
     this.navlinks = this.nav.querySelectorAll('.main-nav__link');
+    this.hamburger = document.querySelector('.hamburger');
+    this.headerContent = document.querySelector('.header__content');
     this.actions();
   }
 
   _getMarginTopHeight() {
-    return document.querySelector('.page-header').getBoundingClientRect().height;
+    return document.querySelector('.header').getBoundingClientRect().height;
   }
 
   _getCurrentPosition() {
@@ -268,35 +263,37 @@ class Navigation {
   }
 
   _getPageHeight() {
-    let scrollHeight = Math.max(
-      document.body.scrollHeight, document.documentElement.scrollHeight,
-      document.body.offsetHeight, document.documentElement.offsetHeight,
+    const scrollHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
     );
     return scrollHeight - document.documentElement.clientHeight;
   }
 
   _getCoords(elem) {
-    let box = elem.getBoundingClientRect();
+    const box = elem.getBoundingClientRect();
     return {
-      pageTop: box.top + pageYOffset,
+      pageTop: box.top + window.pageYOffset,
       top: box.top,
-      height: box.height
+      height: box.height,
     };
   }
 
   _removeLinkActivity() {
-    this.navlinks.forEach((a) => {
+    this.navlinks.forEach(a => {
       a.classList.remove('main-nav__link--current');
-    })
+    });
   }
 
   _addLinkActivity(item) {
-    this.navlinks.forEach((a) => {
+    this.navlinks.forEach(a => {
       a.classList.remove('main-nav__link--current');
-      if (item.getAttribute('id') === a.getAttribute('href').substring((1))) {
+      if (item.getAttribute('id') === a.getAttribute('href').substring(1)) {
         a.classList.add('main-nav__link--current');
       }
-    })
+    });
   }
 
   onScroll(margin) {
@@ -313,38 +310,58 @@ class Navigation {
       this.navlinks[this.navlinks.length - 1].classList.add('main-nav__link--current');
       return null;
     }
-    this.sections.forEach((item) => {
+    this.sections.forEach(item => {
       const elem = this._getCoords(item);
-      if(elem.pageTop - marginTop <= currentPosition && elem.top <= marginTop + 5 && elem.top >= 0) {
+      if (
+        elem.pageTop - marginTop <= currentPosition &&
+        elem.top <= marginTop + 5 &&
+        elem.top >= 0
+      ) {
         this._addLinkActivity(item);
       }
-    })
+    });
+    return null;
   }
 
   actions() {
-    this.sections.forEach((item) => {
+    this.sections.forEach(item => {
       const elem = this._getCoords(item);
       const marginTopHeight = this._getMarginTopHeight();
-      if(elem.pageTop - marginTopHeight <= this._getCurrentPosition() && elem.top <= marginTopHeight) {
+      if (
+        elem.pageTop - marginTopHeight <= this._getCurrentPosition() &&
+        elem.top <= marginTopHeight
+      ) {
         this._addLinkActivity(item);
       }
-    })
-    this.nav.addEventListener('click', (evt) => {
+    });
+    this.nav.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.main-nav__link')) {
         this._removeLinkActivity();
         target.closest('.main-nav__link').classList.add('main-nav__link--current');
+        this.headerContent.classList.remove('open-menu-mobile');
+        document.querySelector('body').classList.remove('scroll-hidden');
       }
-    })
+    });
+    this.hamburger.addEventListener('click', () => {
+      this.headerContent.classList.toggle('open-menu-mobile');
+      document.querySelector('body').classList.toggle('scroll-hidden');
+    });
+    this.headerContent.addEventListener('click', evt => {
+      const target = evt.target;
+      if (target.closest('.header__wrapper')) return null;
+      this.headerContent.classList.remove('open-menu-mobile');
+      document.querySelector('body').classList.remove('scroll-hidden');
+      return null;
+    });
     document.addEventListener('scroll', () => {
       const marginTopHeight = this._getMarginTopHeight();
-      this.sections.forEach((item) => {
+      this.sections.forEach(item => {
         item.style.borderTopWidth = `${marginTopHeight}px`;
         item.style.marginTop = `-${marginTopHeight}px`;
-      })
+      });
       this.onScroll(marginTopHeight);
     });
-
   }
 }
 
@@ -353,27 +370,28 @@ class Navigation {
 
 /***/ }),
 
-/***/ "./js/script.js":
-/*!**********************!*\
-  !*** ./js/script.js ***!
-  \**********************/
+/***/ "./src/js/script.js":
+/*!**************************!*\
+  !*** ./src/js/script.js ***!
+  \**************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./js/slider.js");
-/* harmony import */ var _navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navigation */ "./js/navigation.js");
-/* harmony import */ var _gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gallery */ "./js/gallery.js");
-/* harmony import */ var _form_submission__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-submission */ "./js/form-submission.js");
+/* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/slider.js");
+/* harmony import */ var _navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navigation */ "./src/js/navigation.js");
+/* harmony import */ var _gallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gallery */ "./src/js/gallery.js");
+/* harmony import */ var _form_submission__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-submission */ "./src/js/form-submission.js");
 
 
 
 
 
+/* eslint-disable no-unused-vars */
 document.addEventListener('DOMContentLoaded', () => {
   const slider = new _slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.slider');
-  const navigation = new _navigation__WEBPACK_IMPORTED_MODULE_1__["default"]('.main-nav', '.transition-section');
+  const navigation = new _navigation__WEBPACK_IMPORTED_MODULE_1__["default"]('.main-nav', '.anchor-links');
   const gallery = new _gallery__WEBPACK_IMPORTED_MODULE_2__["default"]('.gallery__list');
   const formSubmission = new _form_submission__WEBPACK_IMPORTED_MODULE_3__["default"]('.form', '.modal');
 });
@@ -381,10 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /***/ }),
 
-/***/ "./js/slider.js":
-/*!**********************!*\
-  !*** ./js/slider.js ***!
-  \**********************/
+/***/ "./src/js/slider.js":
+/*!**************************!*\
+  !*** ./src/js/slider.js ***!
+  \**************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -405,11 +423,12 @@ class Slider {
   }
 
   _findCurrentSlide(elements) {
-    for(let i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length; i++) {
       if (!elements[i].classList.contains('visually-hidden')) {
         return i;
       }
     }
+    return null;
   }
 
   _changeBackgroundColor() {
@@ -419,7 +438,7 @@ class Slider {
 
   slipLeft() {
     const i = this._findCurrentSlide(this.slides);
-    const j = (i - 1 < 0) ? this.slides.length - 1 : i - 1;
+    const j = i - 1 < 0 ? this.slides.length - 1 : i - 1;
     this.slides[i].classList.add('slip-center-left');
     this.slides[j].classList.add('slip-right-center');
     this.slides[j].classList.remove('visually-hidden');
@@ -433,7 +452,7 @@ class Slider {
 
   slipRight() {
     const i = this._findCurrentSlide(this.slides);
-    const j = (i + 1 === this.slides.length) ? 0 : i + 1;
+    const j = i + 1 === this.slides.length ? 0 : i + 1;
     this.slides[i].classList.add('slip-center-right');
     this.slides[j].classList.add('slip-left-center');
     this.slides[j].classList.remove('visually-hidden');
@@ -449,29 +468,33 @@ class Slider {
     const left = this.slipLeft.bind(this);
     const right = this.slipRight.bind(this);
     let possible = true;
-    let debounce = function (delayedFunction) {
+    const debounce = delayedFunction => {
       delayedFunction();
-      setTimeout(() => possible = true, 450);
+      setTimeout(() => {
+        possible = true;
+      }, 450);
     };
     this.previous.addEventListener('click', () => {
-      if(possible) debounce(left);
+      if (possible) debounce(left);
       possible = false;
-    })
+      this.previous.blur();
+    });
     this.next.addEventListener('click', () => {
-      if(possible) debounce(right);
+      if (possible) debounce(right);
       possible = false;
-    })
-    this.phones.forEach((item) => {
+      this.next.blur();
+    });
+    this.phones.forEach(item => {
       const screen = item.querySelector('.slider__img-screen');
-      if( screen !== null) {
-        item.addEventListener('click', (evt) => {
+      if (screen !== null) {
+        item.addEventListener('click', evt => {
           const target = evt.target;
           if (!target.closest('.slider__img-shadow')) {
             screen.classList.toggle('visually-hidden');
           }
-        })
+        });
       }
-    })
+    });
   }
 }
 /* harmony default export */ __webpack_exports__["default"] = (Slider);
@@ -479,15 +502,28 @@ class Slider {
 
 /***/ }),
 
-/***/ 0:
-/*!********************************************!*\
-  !*** multi ./js/script.js ./css/style.css ***!
-  \********************************************/
+/***/ "./src/scss/style.scss":
+/*!*****************************!*\
+  !*** ./src/scss/style.scss ***!
+  \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./js/script.js */"./js/script.js");
-module.exports = __webpack_require__(/*! ./css/style.css */"./css/style.css");
+// extracted by mini-css-extract-plugin
+    if(false) { var cssReload; }
+  
+
+/***/ }),
+
+/***/ 0:
+/*!******************************************************!*\
+  !*** multi ./src/js/script.js ./src/scss/style.scss ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ./src/js/script.js */"./src/js/script.js");
+module.exports = __webpack_require__(/*! ./src/scss/style.scss */"./src/scss/style.scss");
 
 
 /***/ })
