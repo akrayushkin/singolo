@@ -7,11 +7,13 @@ class Navigation {
 
   init() {
     this.navlinks = this.nav.querySelectorAll('.main-nav__link');
+    this.hamburger = document.querySelector('.hamburger');
+    this.headerContent = document.querySelector('.header__content');
     this.actions();
   }
 
   _getMarginTopHeight() {
-    return document.querySelector('.page-header').getBoundingClientRect().height;
+    return document.querySelector('.header').getBoundingClientRect().height;
   }
 
   _getCurrentPosition() {
@@ -19,35 +21,37 @@ class Navigation {
   }
 
   _getPageHeight() {
-    let scrollHeight = Math.max(
-      document.body.scrollHeight, document.documentElement.scrollHeight,
-      document.body.offsetHeight, document.documentElement.offsetHeight,
+    const scrollHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
     );
     return scrollHeight - document.documentElement.clientHeight;
   }
 
   _getCoords(elem) {
-    let box = elem.getBoundingClientRect();
+    const box = elem.getBoundingClientRect();
     return {
-      pageTop: box.top + pageYOffset,
+      pageTop: box.top + window.pageYOffset,
       top: box.top,
-      height: box.height
+      height: box.height,
     };
   }
 
   _removeLinkActivity() {
-    this.navlinks.forEach((a) => {
+    this.navlinks.forEach(a => {
       a.classList.remove('main-nav__link--current');
-    })
+    });
   }
 
   _addLinkActivity(item) {
-    this.navlinks.forEach((a) => {
+    this.navlinks.forEach(a => {
       a.classList.remove('main-nav__link--current');
-      if (item.getAttribute('id') === a.getAttribute('href').substring((1))) {
+      if (item.getAttribute('id') === a.getAttribute('href').substring(1)) {
         a.classList.add('main-nav__link--current');
       }
-    })
+    });
   }
 
   onScroll(margin) {
@@ -64,38 +68,58 @@ class Navigation {
       this.navlinks[this.navlinks.length - 1].classList.add('main-nav__link--current');
       return null;
     }
-    this.sections.forEach((item) => {
+    this.sections.forEach(item => {
       const elem = this._getCoords(item);
-      if(elem.pageTop - marginTop <= currentPosition && elem.top <= marginTop + 5 && elem.top >= 0) {
+      if (
+        elem.pageTop - marginTop <= currentPosition &&
+        elem.top <= marginTop + 5 &&
+        elem.top >= 0
+      ) {
         this._addLinkActivity(item);
       }
-    })
+    });
+    return null;
   }
 
   actions() {
-    this.sections.forEach((item) => {
+    this.sections.forEach(item => {
       const elem = this._getCoords(item);
       const marginTopHeight = this._getMarginTopHeight();
-      if(elem.pageTop - marginTopHeight <= this._getCurrentPosition() && elem.top <= marginTopHeight) {
+      if (
+        elem.pageTop - marginTopHeight <= this._getCurrentPosition() &&
+        elem.top <= marginTopHeight
+      ) {
         this._addLinkActivity(item);
       }
-    })
-    this.nav.addEventListener('click', (evt) => {
+    });
+    this.nav.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.main-nav__link')) {
         this._removeLinkActivity();
         target.closest('.main-nav__link').classList.add('main-nav__link--current');
+        this.headerContent.classList.remove('open-menu-mobile');
+        document.querySelector('body').classList.remove('scroll-hidden');
       }
-    })
+    });
+    this.hamburger.addEventListener('click', () => {
+      this.headerContent.classList.toggle('open-menu-mobile');
+      document.querySelector('body').classList.toggle('scroll-hidden');
+    });
+    this.headerContent.addEventListener('click', evt => {
+      const target = evt.target;
+      if (target.closest('.header__wrapper')) return null;
+      this.headerContent.classList.remove('open-menu-mobile');
+      document.querySelector('body').classList.remove('scroll-hidden');
+      return null;
+    });
     document.addEventListener('scroll', () => {
       const marginTopHeight = this._getMarginTopHeight();
-      this.sections.forEach((item) => {
+      this.sections.forEach(item => {
         item.style.borderTopWidth = `${marginTopHeight}px`;
         item.style.marginTop = `-${marginTopHeight}px`;
-      })
+      });
       this.onScroll(marginTopHeight);
     });
-
   }
 }
 

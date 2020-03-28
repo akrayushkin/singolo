@@ -1,0 +1,30 @@
+.container {
+  min-width: $mobile-width;
+  width: $mobile-width;
+  margin: 0 auto;
+  padding: 0 $mobile-pads;
+
+  @include media-mobilebig {
+    width: $mobile-big-width;
+    padding: 0 $mobile-big-pads;
+  }
+
+  @media (min-width: 376px) and (max-width: 767px) {
+    width: auto;
+  }
+
+  @include media-tablet {
+    width: $tablet-width;
+    padding: 0 $tablet-pads;
+  }
+
+  @media (min-width: 769px) and (max-width: 1019px) {
+    width: auto;
+  }
+
+  @include media-desktop {
+    width: $desktop-width;
+    max-width: $desktop-width;
+    padding: 0 $desktop-pads;
+  }
+}

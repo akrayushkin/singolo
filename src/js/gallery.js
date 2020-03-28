@@ -12,7 +12,7 @@ class Gallery {
 
   _sortArayRandomly(array) {
     const arrayCopy = [...array];
-    function compareRandom(a, b) {
+    function compareRandom() {
       return Math.random() - 0.5;
     }
     arrayCopy.sort(compareRandom);
@@ -26,24 +26,24 @@ class Gallery {
     }
     this._sortArayRandomly(array).forEach(item => {
       this.gallery.appendChild(item);
-    })
+    });
   }
 
   actions() {
-    this.filters.addEventListener('click', (evt) => {
+    this.filters.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.filter__link') && !target.closest('.filter__link--active')) {
         this._mixGallery(this.galleryItems);
         this.filters.querySelectorAll('.filter__link').forEach(item => {
-          item.classList.remove('filter__link--active')
+          item.classList.remove('filter__link--active');
         });
         target.closest('.filter__link').classList.add('filter__link--active');
       }
     });
-    this.gallery.addEventListener('click', (evt) => {
+    this.gallery.addEventListener('click', evt => {
       const target = evt.target;
       if (target.closest('.gallery__item')) {
-        if(target.closest('.gallery__item--active')) {
+        if (target.closest('.gallery__item--active')) {
           target.closest('.gallery__item--active').classList.toggle('gallery__item--active');
         } else {
           this.galleryItems.forEach(item => item.classList.remove('gallery__item--active'));

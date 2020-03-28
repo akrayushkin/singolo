@@ -1,0 +1,120 @@
+.contacts__title {
+  margin: 0 0 3px 0;
+
+  @include font($size: 1.8rem, $weight: 900);
+  color: inherit;
+
+  @include media-tablet {
+    margin: 0 0 1% 0;
+  }
+
+  @include media-desktop {
+    margin: 0 0 10px 0;
+  }
+}
+
+.contacts__intro {
+  max-height: 180px;
+  margin: 0;
+  margin: 0 0 10px 0;
+  overflow: hidden;
+
+  @include font($size: 1.2rem, $height: 2.2rem);
+  text-align: justify;
+  color: inherit;
+  hyphens: auto;
+
+  @include media-tablet {
+    margin: 0 0 4% 0;
+  }
+
+  @include media-desktop {
+    margin: 0 0 20px 0;
+  }
+}
+
+.contacts__list {
+  margin: 0;
+}
+
+.contacts__item {
+  margin: 0 0 2px 0;
+
+  @include media-tablet {
+    margin: 0 0 -1px 0;
+  }
+}
+
+.contacts__link {
+  position: relative;
+
+  display: inline-block;
+  padding-left: 23px;
+
+  @include font($size: 1.2rem, $height: 2.2rem);
+  color: inherit;
+
+  &:hover,
+  &:focus {
+    color: $color-title;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+
+    display: block;
+    width: 14px;
+    height: 11px;
+    margin-top: -5px;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &--location {
+
+    &::before {
+      width: 8px;
+      height: 15px;
+      margin-top: -7px;
+      margin-left: 2px;
+
+      background-image: url("../img/ico--location.svg");
+
+      @include media-tablet {
+        width: 10px;
+        margin-top: -8px;
+        margin-left: 1px;
+      }
+    }
+  }
+
+  &--phone::before {
+    height: 14px;
+    margin-top: -6px;
+    margin-left: -1px;
+
+    background-image: url("../img/ico--phone.svg");
+
+    @include media-tablet {
+      margin-top: -7px;
+    }
+  }
+
+  &--email::before {
+    background-image: url("../img/ico--email.svg");
+    width: 13px;
+    height: 11px;
+    margin-top: -4px;
+
+    @include media-tablet {
+      margin-top: -5px;
+      height: 10px;
+    }
+  }
+}

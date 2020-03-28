@@ -1,0 +1,148 @@
+.services__inner {
+  padding-top: 25px;
+  padding-bottom: 15px;
+  background-color: $color-bg-light;
+  border-bottom: 0 solid $color-light;
+
+  @include media-tablet {
+    min-height: 494px;
+    padding-top: 40px;
+    padding-bottom: 24px;
+  }
+
+  @include media-desktop {
+    min-height: 494px;
+    padding-top: 59px;
+    padding-bottom: 26px;
+
+    border-bottom-width: 6px;
+  }
+}
+
+.services__title {
+  margin: 0 0 18px 0;
+
+  @include font($size: 3rem, $height: 3.6rem, $weight: 900);
+}
+
+.services__intro {
+  margin: 0 0 29px 0;
+
+  @include font($size: 1.8rem, $height: 3rem, $weight: 300);
+
+  @include media-tablet {
+    margin-bottom: 38px;
+  }
+
+  @include media-desktop {
+    margin-bottom: 47px;
+  }
+}
+
+.services__list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  text-align: justify;
+
+  @media (min-width: 376px) and (max-width: $mobile-width-only) {
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  @include media-tablet {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.services__item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 104px;
+  margin-bottom: 15px;
+
+  overflow: hidden;
+
+  @include media-tablet {
+    margin-right: 20px;
+    margin-bottom: 39px;
+    flex: 1 0 35%;
+  }
+
+  @media (min-width: $tablet-width) and (max-width: 1019px) {
+    &:nth-child(even) {
+      margin-right: 0;
+    }
+  }
+
+  @include media-desktop {
+    margin-right: 20px;
+    margin-bottom: 20px;
+    flex: 1 0 30%;
+
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.services__item-ico {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  margin: 0 20px 0 0;
+}
+
+.services__item-img {
+  display: flex;
+  width: 100%;
+  line-height: 1;
+}
+
+.services__item-content {
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.services__item-title {
+  margin: -1px 0 8px 0;
+
+  @include font($size: 1.8rem, $height: 2rem, $weight: 900);
+  color: $color-title;
+}
+
+.services__item-intro {
+  min-height: 76px;
+  margin: 0;
+
+  @include font($size: 1.2rem, $height: 2.2rem, $weight: 400);
+  text-align: justify;
+  overflow: hidden;
+  hyphens: auto;
+
+  -moz-hyphenate-limit-chars: 6 3 3;
+  -ms-hyphenate-limit-chars: 6 3 3;
+  -moz-hyphenate-limit-last: always;
+  -ms-hyphenate-limit-last: always;
+  -moz-hyphenate-limit-lines: 2;
+  -ms-hyphenate-limit-lines: 2;
+  -moz-hyphenate-limit-zone: 8%;
+  -ms-hyphenate-limit-zone: 8%;
+
+  @include media-tablet {
+    padding-right: 13%;
+  }
+
+  @include media-desktop {
+    padding-right: 0;
+  }
+}

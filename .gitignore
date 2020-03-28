@@ -1,5 +1,14 @@
-node_modules/
-npm-debug.*
+design/
+build/*
+!build/readme.md
+
+src/pug/mixins.pug
+src/js/entry.js
+src/scss/style.scss
+
+src/blocks/sprite-svg/img/sprite.svg
+src/blocks/sprite-png/sprite-png.scss
+src/blocks/sprite-png/img/sprite-*.png
 
 __MACOSX
 .Saved/
@@ -14,8 +23,5 @@ node_modules/
 *.rar
 *.zip
 .idea
-*.ai
-*.pdf
-*.psd
 ex_files
 Thumbs.db

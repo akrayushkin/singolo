@@ -24,8 +24,6 @@ const optimization = () => {
   return config;
 };
 
-const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
-
 function generateHtmlPlugins(templateDir) {
   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
   return templateFiles.map((item) => {
@@ -41,26 +39,6 @@ function generateHtmlPlugins(templateDir) {
     });
   });
 }
-
-const cssLoaders = (extra) => {
-  const loaders = [
-    {
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        hmr: isDev,
-        reloadAll: true,
-      },
-    },
-    'css-loader',
-  ];
-
-  if (extra) {
-    loaders.push('resolve-url-loader');
-    loaders.push(extra);
-  }
-
-  return loaders;
-};
 
 const babelOptions = (preset) => {
   const opts = {
@@ -97,20 +75,12 @@ const plugins = () => {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
-        from: './fonts',
-        to: './assets/fonts',
-      },
-      {
-        from: './assets/favicon',
-        to: './assets/favicon',
-      },
-      {
-        from: './img',
+        from: './src/img',
         to: './assets/img',
       },
     ]),
     new MiniCssExtractPlugin({
-      filename: `style.css`,
+      filename: isDev ? `style.css` : `style.[hash].css`,
     }),
   ].concat(htmlPlugin);
 
@@ -118,11 +88,11 @@ const plugins = () => {
 };
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
-  mode: 'development',
-  entry: ['./js/script.js', './css/style.css'],
+  mode: isProd ? 'production' : 'development',
+  entry: ['./src/js/script.js', './src/scss/style.scss'],
   output: {
-    filename: 'script.js',
+    path: path.join(__dirname, '/dist'),
+    filename: isDev ? `script.js` : `script.[hash].js`,
   },
   resolve: {
     extensions: ['.js', '.json'],
@@ -140,32 +110,45 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: cssLoaders(),
-      },
-      {
         test: /\.s[ac]ss$/,
-        use: cssLoaders('sass-loader'),
-      },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
+        use:  [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: isDev,
+              reloadAll: true,
+            },
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDev,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: isDev,
+            },
+          }
+      ]
+      }, {
+        test: /\.(png|jpe?g|svg|gif)$/,
         use: [
           {
             loader: 'file-loader',
             options: { name: 'assets/img/[name].[ext]' },
           },
         ],
-      },
-      {
+      }, {
         test: /\.(ttf|woff|woff2|eot)$/,
         use: [
           {
             loader: 'file-loader',
-            options: { name: 'assets/fonts/[name].[ext]' },
+            options: { outputPath: 'assets/fonts/' },
           },
         ],
-      },
-      {
+      }, {
         test: /\.js$/,
         exclude: /node_modules/,
         include: path.resolve(__dirname, 'js'),
@@ -174,7 +157,7 @@ module.exports = {
       {
         test: /\.html$/,
         include: path.resolve(__dirname, 'html'),
-        use: ['html-loader'],
+        loader: 'html-loader',
       },
     ],
   },

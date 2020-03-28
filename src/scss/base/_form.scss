@@ -1,0 +1,164 @@
+.form__input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 38px;
+  margin-bottom: 12px;
+  padding: 0 5px;
+
+  @include font($size: 1.2rem);
+  @extend %font-prim;
+  color: $color-additional;
+
+  background-color: $color-input;
+  border: 1px solid $color-input;
+  border-radius: 5px;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    border-color: $color-input-border;
+  }
+
+  &::placeholder {
+    @include font($size: 1.2rem);
+    color: $color-placeholder;
+    text-overflow: ellipsis;
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &::-webkit-input-placeholder {
+    @include font($size: 1.2rem);
+    color: $color-placeholder;
+    text-overflow: ellipsis;
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &::-moz-placeholder {
+    @include font($size: 1.2rem);
+    color: $color-placeholder;
+    text-overflow: ellipsis;
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &::-ms-input-placeholder{
+    @include font($size: 1.2rem);
+    color: $color-placeholder;
+    text-overflow: ellipsis;
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:-ms-input-placeholder {
+    @include font($size: 1.2rem);
+    color: $color-placeholder;
+    text-overflow: ellipsis;
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus::placeholder {
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus::-webkit-input-placeholder {
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus::-moz-placeholder {
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus::-ms-input-placeholder {
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus:-ms-input-placeholder {
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+  }
+
+  &:invalid:not(:placeholder-shown) {
+    border-color: red;
+  }
+
+  &:valid:not(:placeholder-shown) {
+    border-color: green;
+  }
+
+  @include media-tablet {
+    margin-bottom: 2.7%;
+    padding: 0 7px;
+  }
+
+  @include media-desktop {
+    margin-bottom: 16px;
+    padding: 0 13px;
+  }
+}
+
+@keyframes autofill {
+  0%,
+  100% {
+    color: $color-additional;
+
+    background: $color-input;
+  }
+}
+
+.form__input:-webkit-autofill {
+  animation-name: autofill;
+  animation-delay: 1s;
+
+  animation-fill-mode: both;
+}
+
+.form__input-comment {
+  height: 159px;
+  padding-top: 9px;
+
+  resize: none;
+
+  @include media-tablet {
+    margin-bottom: 15px;
+  }
+
+  @include media-desktop {
+    margin-bottom: 12px;
+  }
+}
+
+.form__button {
+  width: 100%;
+  height: 50px;
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  @include media-tablet {
+    width: 136px;
+    height: 38px;
+  }
+}

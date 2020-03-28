@@ -1,0 +1,23 @@
+%transition {
+    transition: all 300ms ease-out;
+}
+
+%font-prim {
+  font-family: "Lato",
+    "Lucida Sans Unicode",
+    "Lucida Grande",
+    sans-serif;
+}
+
+%custom-scroll {
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 1px grey;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $color-additional;
+      border-radius: 10px;
+    }
+  }

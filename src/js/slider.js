@@ -13,11 +13,12 @@ class Slider {
   }
 
   _findCurrentSlide(elements) {
-    for(let i = 0; i < elements.length; i++) {
+    for (let i = 0; i < elements.length; i++) {
       if (!elements[i].classList.contains('visually-hidden')) {
         return i;
       }
     }
+    return null;
   }
 
   _changeBackgroundColor() {
@@ -27,7 +28,7 @@ class Slider {
 
   slipLeft() {
     const i = this._findCurrentSlide(this.slides);
-    const j = (i - 1 < 0) ? this.slides.length - 1 : i - 1;
+    const j = i - 1 < 0 ? this.slides.length - 1 : i - 1;
     this.slides[i].classList.add('slip-center-left');
     this.slides[j].classList.add('slip-right-center');
     this.slides[j].classList.remove('visually-hidden');
@@ -41,7 +42,7 @@ class Slider {
 
   slipRight() {
     const i = this._findCurrentSlide(this.slides);
-    const j = (i + 1 === this.slides.length) ? 0 : i + 1;
+    const j = i + 1 === this.slides.length ? 0 : i + 1;
     this.slides[i].classList.add('slip-center-right');
     this.slides[j].classList.add('slip-left-center');
     this.slides[j].classList.remove('visually-hidden');
@@ -57,29 +58,33 @@ class Slider {
     const left = this.slipLeft.bind(this);
     const right = this.slipRight.bind(this);
     let possible = true;
-    let debounce = function (delayedFunction) {
+    const debounce = delayedFunction => {
       delayedFunction();
-      setTimeout(() => possible = true, 450);
+      setTimeout(() => {
+        possible = true;
+      }, 450);
     };
     this.previous.addEventListener('click', () => {
-      if(possible) debounce(left);
+      if (possible) debounce(left);
       possible = false;
-    })
+      this.previous.blur();
+    });
     this.next.addEventListener('click', () => {
-      if(possible) debounce(right);
+      if (possible) debounce(right);
       possible = false;
-    })
-    this.phones.forEach((item) => {
+      this.next.blur();
+    });
+    this.phones.forEach(item => {
       const screen = item.querySelector('.slider__img-screen');
-      if( screen !== null) {
-        item.addEventListener('click', (evt) => {
+      if (screen !== null) {
+        item.addEventListener('click', evt => {
           const target = evt.target;
           if (!target.closest('.slider__img-shadow')) {
             screen.classList.toggle('visually-hidden');
           }
-        })
+        });
       }
-    })
+    });
   }
 }
 export default Slider;

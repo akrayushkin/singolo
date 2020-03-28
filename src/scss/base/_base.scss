@@ -1,0 +1,63 @@
+html {
+  font-size: 10px;
+  scroll-behavior: smooth;
+}
+
+body {
+  @extend %font-prim;
+  @include font();
+
+  color: $color-primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $color-title;
+}
+
+h1 {
+  @extend %font-prim;
+  @include font($size: 4.4rem, $height: 5.4rem, $weight: 900);
+}
+
+h2 {
+  @include font($size: 3rem, $height: 3.6rem, $weight: 900);
+}
+
+h3 {
+  @include font($size: 1.8rem, $weight: 900);
+}
+
+h4 {
+  @include font($size: 1.6rem, $weight: 700);
+}
+
+h5 {
+  @include font($size: 1.4rem, $weight: 700);
+}
+
+.visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  border: 0;
+  padding: 0;
+
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.anchor-links {
+  border-top: 0 solid transparent;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+.scroll-hidden {
+  overflow: hidden;
+}

@@ -1,0 +1,49 @@
+.employee__img {
+  width: 100%;
+  height: auto;
+  margin: 0 0 16px 0;
+
+  @include media-tablet {
+    margin-bottom: 12px;
+  }
+
+  @include media-desktop {
+    margin-bottom: 17px;
+  }
+}
+
+.employee__title {
+  margin: 0 0 3px 0;
+  overflow: hidden;
+
+  @include font($size: 1.8rem, $weight: 900);
+  color: $color-title;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  @include media-desktop {
+    margin-bottom: 10px;
+  }
+}
+
+.employee__intro {
+  margin: 0 0 11px 0;
+
+  @include font($size: 1.2rem, $height: 2.2rem);
+  text-align: justify;
+
+  @include media-tablet {
+    margin: 0 0 10px 0;
+  }
+
+  @include media-desktop {
+    margin: 0 0 22px 0;
+  }
+}
+
+.employee__social {
+  display: flex;
+  justify-content: space-between;
+  width: 152px;
+  margin: 0;
+}

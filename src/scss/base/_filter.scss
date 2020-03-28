@@ -1,0 +1,44 @@
+.filter {
+  display: flex;
+  margin: 0;
+}
+
+.filter__item:first-child a {
+  padding: 0 7px;
+}
+
+.filter__link {
+  display: block;
+  margin-right: 9px;
+  padding: 0 6px;
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.7;
+  color: $color-primary;
+  letter-spacing: 0.1px;
+
+  border: 1px solid $color-primary;
+  border-radius: 6px;
+  outline: none;
+
+  transition: all 0.3s;
+
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    color: $color-grey;
+    border-color: $color-grey;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+
+  &--active {
+    color: $color-grey;
+    border-color: $color-grey;
+    cursor: auto;
+  }
+}
